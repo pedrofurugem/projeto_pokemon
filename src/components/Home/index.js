@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import styled, { css } from 'styled-components'
+import Pokemon_title from '../../images/pokemon_title.png'
+import pokeball from '../../images/pokeball_open.gif'
 
 import { getPokemonsList, getPokemon } from '../../services/apis'
 
@@ -26,26 +29,89 @@ const PokemonList = () => {
     }
 
     return (
-        <section>
-            <h2>PokemonList</h2>
+        <>
+        <Header>
+          <PokemonTitle src={Pokemon_title} alt="pokebola-logo"/>
+        </Header>
+        <Section> 
             {
                 pokedex.map((pokemon, index) => {
                     return (
                         <Link to={`/PokemonDetails/${pokemon.name}`} key={index}>
-                            <div>
-                                <p>#{pokemon.id}</p>
-                                <img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemoncards" />
-                                <p>{pokemon.name}</p>
-                            </div>
+                            <PokemonCard>  
+                                <Img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemoncards" />
+                                <Name>#{pokemon.id} - {pokemon.name}</Name>
+                            </PokemonCard>
                         </Link>
                     )
                 })
             }
-            <button onClick={hundleMorePokemons}>
-                <span>Load More</span>
-            </button>
-        </section>
+        </Section>
+
+        <Footer>
+            <ButtonShowMore onClick={hundleMorePokemons}>
+            <Pokeball src={pokeball} alt="pokebol" />
+                <p>Show More</p>
+            </ButtonShowMore>
+        </Footer>
+        </>
     )
 }
+
+const Header = styled.header`
+   display: flex;
+   justify-content: center;
+`
+
+const PokemonTitle = styled.img`
+   width: 550px;
+   margin: 25px 0px;
+`
+
+const Section = styled.section`
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   width: 85vw;
+   margin: auto;
+`
+
+const Img = styled.img`
+   width: 250px;
+   padding: 5px;
+   border: 5px solid #FF0000;
+   border-radius: 50%;
+   background-color: #FFF;
+`
+
+const PokemonCard = styled.div`
+   display: flex;
+   height: 350px;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-around;
+   border: 1px solid ;
+   border-radius: 25px;
+   padding: 10px;
+   margin: 10px;
+`
+
+const Name = styled.p`
+   font-size: 25px;
+`
+const Footer = styled.footer`
+   display: flex;
+   justify-content: center;
+`
+
+const Pokeball = styled.img`
+   width: 150px;
+`
+
+const ButtonShowMore = styled.button`
+   border: none;
+   background: none;
+`
 
 export { PokemonList }
