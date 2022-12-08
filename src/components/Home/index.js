@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import Pokemon_title from '../../images/pokemon_title.png'
-import pokeball from '../../images/pokeball_open.gif'
+import pokeball from '../../images/pokeball.png'
+import pokeballIcon from '../../images/pokeball-icon.png'
+import pokeballgif from '../../images/pokeball_open.gif'
+
 
 import { getPokemonsList, getPokemon } from '../../services/apis'
 
@@ -22,7 +25,7 @@ const PokemonList = () => {
             setPokedex([...pokedex, ...PokemonsPromises])
         }
         fetchData()
-    }, [load])
+    },  [load])
 
     function hundleMorePokemons(){
         setLoad(pokemonLoads + load)
@@ -31,7 +34,8 @@ const PokemonList = () => {
     return (
         <>
         <Header>
-          <PokemonTitle src={Pokemon_title} alt="pokebola-logo"/>
+            <PokemonTitle src={Pokemon_title} alt="pokebola-logo"/>
+           <PokeballTitle src={pokeball} alt="pokeball" />
         </Header>
         <Section> 
             {
@@ -40,7 +44,7 @@ const PokemonList = () => {
                         <Link to={`/PokemonDetails/${pokemon.name}`} key={index}>
                             <PokemonCard>  
                                 <Img src={pokemon.sprites.other['official-artwork'].front_default} alt="pokemoncards" />
-                                <Name>#{pokemon.id} - {pokemon.name}</Name>
+                                <Name><PokeballIcon src={pokeballIcon} alt="pokeballicon"/> {pokemon.name}</Name>
                             </PokemonCard>
                         </Link>
                     )
@@ -50,7 +54,7 @@ const PokemonList = () => {
 
         <Footer>
             <ButtonShowMore onClick={hundleMorePokemons}>
-            <Pokeball src={pokeball} alt="pokebol" />
+            <Pokeball src={pokeballgif} alt="pokebol" />
                 <p>Show More</p>
             </ButtonShowMore>
         </Footer>
@@ -61,6 +65,12 @@ const PokemonList = () => {
 const Header = styled.header`
    display: flex;
    justify-content: center;
+   align-items: center;
+`
+const PokeballTitle = styled.img`
+    width: 150px;
+    height: 150px;
+    margin-top: 45px;
 `
 
 const PokemonTitle = styled.img`
@@ -80,7 +90,7 @@ const Section = styled.section`
 const Img = styled.img`
    width: 250px;
    padding: 5px;
-   border: 5px solid #FF0000;
+   border: 5px solid #FFCC03;
    border-radius: 50%;
    background-color: #FFF;
 `
@@ -95,10 +105,20 @@ const PokemonCard = styled.div`
    border-radius: 25px;
    padding: 10px;
    margin: 10px;
+   background-color: #3C59A5;
+`
+const PokeballIcon = styled.img`
+  width: 45px;
 `
 
 const Name = styled.p`
+   display: flex;
+   align-items: center;
+   justify-content: center;
    font-size: 25px;
+   font-family: 'Pokemon';
+   color: #F8F8FF;
+   letter-spacing: 3px;
 `
 const Footer = styled.footer`
    display: flex;
@@ -112,6 +132,7 @@ const Pokeball = styled.img`
 const ButtonShowMore = styled.button`
    border: none;
    background: none;
+   cursor: pointer;
 `
 
 export { PokemonList }

@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'Pokemon';
+  src: url('./assets/fonts/Pokemon Solid.ttf'),
+      url('./assets/fonts/Pokemon Hollow.ttf'),
+      url('./assets/fonts/NerkoOne-Regular.ttf')
+}

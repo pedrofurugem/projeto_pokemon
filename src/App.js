@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0px;
     padding: 0px;
+    font-family: 'Nerko One', sans-serif;
   }
 
   li {
@@ -24,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: #000000;
   }
 `
 
