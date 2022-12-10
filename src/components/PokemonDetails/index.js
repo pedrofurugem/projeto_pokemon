@@ -1,26 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { getPokemon, getAbilities } from '../../services/apis'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../../contexts/theme-context'
 import Title from '../../images/pokemon_title.png'
 import Pokeball from '../../images/pokeball.png'
-import setaVoltar from '../../images/seta-voltar.png'
-
-async function pikachu(){
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/25')
-    const json = await response.json()
-    console.log(json)
-}
-pikachu()
-
-
-//https://pokeapi.co/api/v2/move/13/ - moves
-//https://pokeapi.co/api/v2/ability/51/ -abilities
-//https://pokeapi.co/api/v2/type/1/  -types
+import Pokeballgif from '../../images/pokeball.gif'
 
 const Pokemon = () => {
-
+    const {theme} = useContext(ThemeContext)
     const [details, setDetails] = useState({
         pokeId: 0,
         pokeName: '',
@@ -51,7 +41,7 @@ const Pokemon = () => {
                 }) 
                 //moves
                 const pokeMoves = await pokeDetails.moves
-                setMoves(pokeMoves.slice(0, 10))
+                setMoves(pokeMoves.slice(0, 20))
 
             //abilities
             const pokeAbilities = pokeDetails.abilities
@@ -71,22 +61,23 @@ const Pokemon = () => {
     }, [name])
 
     return(
-        <>
-        <Link to='/'>
-            <SetaVoltar src={setaVoltar} alt="seta-voltar"/>
-        </Link>  
+        <section style={{ backgroundColor: theme.background }}> 
 
-        <HeaderLogo>
-            <TitleLogo src={Title} alt="pokeball" />
-            <PokeballLogo src={Pokeball} alt="title"/>
-        </HeaderLogo>
+            <HeaderLogo>
+                <TitleLogo src={Title} alt="pokeball" />
+                <PokeballLogo src={Pokeball} alt="title"/>
+            </HeaderLogo>
         
-        <PokeName>
-         <Name>{details.pokeName}</Name>
-        </PokeName>
-        <PokemonDetails>
-            <PokemonCardHeader>
-                <PokePerfil src={details.pokeImg} alt="pokemon" />
+            <PokemonDetails>
+                <PokemonCardHeader>
+                    <PokePerfil src={details.pokeImg} alt="pokemon" />
+                    <Name>{details.pokeName}</Name>
+                    <PokemonPicture>
+                        <Picture src={details.Back_default } alt="pictures"/>
+                        <Picture src={details.Back_shiny} alt="pictures"/>
+                        <Picture src={details.Front_default} alt="pictures"/>
+                        <Picture src={details.Front_shiny} alt="pictures"/>
+                    </PokemonPicture>
             </PokemonCardHeader>
 
                 <Details>
@@ -109,7 +100,7 @@ const Pokemon = () => {
                             ability.map((pokeAbility, index) => {
                                 return (
                                     <li key={index}>
-                                        <h3>{pokeAbility.name}:</h3>
+                                        <AbilityName>{pokeAbility.name}:</AbilityName>
                                         <p>decription: {pokeAbility.effect_entries[1].effect}</p>
                                     </li>
                                 )
@@ -133,19 +124,14 @@ const Pokemon = () => {
                  </ul>
                 </Details>
             </PokemonDetails>
-
-            <section>
-                <img src={details.Back_default} alt="pictures"/>
-                <img src={details.Back_female} alt="pictures"/>
-                <img src={details.Back_shiny} alt="pictures"/>
-                <img src={details.Back_shiny_female} alt="pictures"/>
-                <img src={details.Front_default} alt="pictures"/>
-                <img src={details.Front_female} alt="pictures"/>
-                <img src={details.Front_shiny} alt="pictures"/>
-                <img src={details.Front_shiny_female} alt="pictures"/>
-            </section>
-
-        </>
+            
+            <Footer>
+                <Link to='/'>
+                    <SetaVoltar src={Pokeballgif} alt="seta-voltar"/>
+                </Link> 
+                   <Back>Back to Home</Back>
+            </Footer>
+        </section>
     )
 }
 
@@ -153,7 +139,7 @@ const HeaderLogo = styled.header`
    display: flex;
    align-items: center;
    justify-content: center;
-   margin: 15px 0px;
+   margin-bottom: 30px;
 `
 
 const TitleLogo = styled.img`
@@ -163,18 +149,14 @@ const TitleLogo = styled.img`
 const PokeballLogo = styled.img`
    width: 80px;
    margin-top: 35px;
-   background-color: white;
+   background: none;
 `
 
-const PokeName = styled.div`
-   margin: auto;
-   text-align: center;
-   width: 190px;
-`
 const Name = styled.h1`
     font-size: 2.5em;
     font-weight: bold;
     font-family: 'Pokemon';
+    color: #FFCC03;
     letter-spacing: 5px;
 `
 
@@ -186,7 +168,7 @@ const PokemonCardHeader = styled.section`
 `
 
 const PokePerfil = styled.img`
-    border: 6px solid red;
+    border: 6px solid #FFCC03;
     width: 250px;
     border-radius: 50%;
     background-color: white;
@@ -194,31 +176,67 @@ const PokePerfil = styled.img`
 
 const PokemonDetails = styled.section`
     display: flex;
-    background-color: lightblue;
+    background-color: #3C59A5;
     justify-content: center;
     width: 55vw;
-    border: 1px solid black;
+    border: 3px solid black;
     border-radius: 25px;
     margin: auto;
 `
 const ListMoves = styled.li`
-    width: 110px;
+    width: 150px;
 `
 
 const Details = styled.div`
-   padding: 10px;
-   border-left: 1px solid black;
+   font-size: 16px;
+   font-weight: bold;
+   padding: 5px;
+   border-left: 3px solid black;
+   color: #FFFF;
+`
+
+const AbilityName = styled.h3`
+   color: #FFCC03;
 `
 
 const FeatureName = styled.h1`
-   border-bottom: 1px solid black;
+   text-align: center;
+   padding: 5px;
+   border-bottom: 3px solid black;
+   color: #FFCC03;
+`
+
+const PokemonPicture = styled.section`
+   display: flex;
+   justify-content: center;
+   border-radius: 25px;
+   border: 10px solid #FFCC03;
+   background-color: white;
+   align-items: center;
+`
+
+const Picture = styled.img`
+     width: 150px;
+`
+const Footer = styled.footer`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 
 const SetaVoltar = styled.img`
-   width: 50px;
+   width: 100px;
    margin: auto
 `
 
+
+const Back = styled.p`
+    font-family: 'Pokemon';
+    color: #FFCC03;
+    font-size: 25px;
+    letter-spacing: 2px;
+`
 
 
 export { Pokemon }

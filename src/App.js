@@ -2,13 +2,18 @@
 import './App.css';
 import AppRoutes from './routes/routes'
 import { createGlobalStyle  } from 'styled-components'
+import { ThemeProvider } from './contexts/theme-context'
+import { ThemeTogglerButton } from './components/Theme-toggler-button/theme-toggler-button'
 
 function App() {
   return (
-    <div>
-      <GlobalStyle />
-      <AppRoutes />
-    </div>
+    <>
+      <ThemeProvider>
+        <ThemeTogglerButton />
+        <GlobalStyle />
+        <AppRoutes />
+      </ThemeProvider >
+    </>
   );
 }
 
@@ -19,6 +24,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Nerko One', sans-serif;
   }
 
+  
+
+  //cores para o context
+  //#E0FFFF 
+  //#191970	
   li {
     list-style-type: none;
   }

@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../../contexts/theme-context'
 import styled from 'styled-components'
 import Pokemon_title from '../../images/pokemon_title.png'
 import pokeball from '../../images/pokeball.png'
 import pokeballIcon from '../../images/pokeball-icon.png'
-import pokeballgif from '../../images/pokeball_open.gif'
+import pokeballgif from '../../images/pokeball.gif'
 
 
 import { getPokemonsList, getPokemon } from '../../services/apis'
 
 const PokemonList = () => {
-
+    const {theme} = useContext(ThemeContext)
     const [pokedex, setPokedex] = useState([])
     const [load, setLoad] = useState(0)
     let pokemonLoads = 10
@@ -32,12 +34,12 @@ const PokemonList = () => {
     }
 
     return (
-        <>
-        <Header>
-            <PokemonTitle src={Pokemon_title} alt="pokebola-logo"/>
-           <PokeballTitle src={pokeball} alt="pokeball" />
-        </Header>
-        <Section> 
+        <section style={{backgroundColor: theme.background }}>
+            <Header>
+               <PokemonTitle src={Pokemon_title} alt="pokebola-logo"/>
+               <PokeballTitle src={pokeball} alt="pokeball" />
+            </Header>
+            <Section> 
             {
                 pokedex.map((pokemon, index) => {
                     return (
@@ -50,15 +52,15 @@ const PokemonList = () => {
                     )
                 })
             }
-        </Section>
+            </Section>
 
-        <Footer>
-            <ButtonShowMore onClick={hundleMorePokemons}>
-            <Pokeball src={pokeballgif} alt="pokebol" />
-                <p>Show More</p>
-            </ButtonShowMore>
-        </Footer>
-        </>
+            <Footer>
+                <ButtonShowMore onClick={hundleMorePokemons}>
+                <Pokeball src={pokeballgif} alt="pokebol" />
+                    <ShowMore>Show More</ShowMore>
+                </ButtonShowMore>
+            </Footer>
+        </section>
     )
 }
 
@@ -107,8 +109,11 @@ const PokemonCard = styled.div`
    margin: 10px;
    background-color: #3C59A5;
 `
+//#3C59A5
+//#E0FFFF
 const PokeballIcon = styled.img`
   width: 45px;
+  background: none;
 `
 
 const Name = styled.p`
@@ -117,8 +122,9 @@ const Name = styled.p`
    justify-content: center;
    font-size: 25px;
    font-family: 'Pokemon';
-   color: #F8F8FF;
+   color: #FFCC03;
    letter-spacing: 3px;
+   background: none;
 `
 const Footer = styled.footer`
    display: flex;
@@ -133,6 +139,13 @@ const ButtonShowMore = styled.button`
    border: none;
    background: none;
    cursor: pointer;
+`
+
+const ShowMore = styled.p`
+    font-family: 'Pokemon';
+    color: #FFCC03;
+    font-size: 25px;
+
 `
 
 export { PokemonList }
