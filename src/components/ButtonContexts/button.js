@@ -1,4 +1,5 @@
 import  { ThemeContext } from '../../contexts/theme-context'
+import styled from 'styled-components'
 import React, { useContext } from 'react'
 
 const Button = (props) => {
@@ -7,8 +8,13 @@ const Button = (props) => {
     console.log('button theme', theme)
 
     return(
-        <button {...props} />
+        <Btn  {...props} />
     )
 }
+
+const Btn = styled.button`
+   background: none;
+   border: none;
+`
 
 export { Button }

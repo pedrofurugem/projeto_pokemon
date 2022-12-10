@@ -10,8 +10,8 @@ const ThemeTogglerButton = () => {
     console.log('ThemeTogglerButton: ', theme)
 
     return(
-        <div style={{ backgroundColor: theme.background, }}>
-            <Button onClick={() => setTheme(theme === themes.light ? themes.dark : themes.light)}><PokeballContext src={Pokeball} alt="pokeballContext" /></Button>
+        <div style={{ backgroundColor: theme.background }}>
+            <Button  onClick={() => setTheme(theme === themes.light ? themes.dark : themes.light)}><PokeballContext src={Pokeball} alt="pokeballContext" /></Button>
         </div>
     )
 }
@@ -19,5 +19,6 @@ const ThemeTogglerButton = () => {
 const PokeballContext = styled.img`
   width: 70px;
 `
+
 
 export { ThemeTogglerButton }
